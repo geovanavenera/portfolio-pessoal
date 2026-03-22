@@ -1,0 +1,797 @@
+/* ═══════════════════════════════════════════════════
+   style.css — Portfólio Pessoal
+   Estrutura:
+   1. Variáveis CSS (temas dark/light)
+   2. Reset & Base
+   3. Nav
+   4. Hero
+   5. Seções (layout compartilhado)
+   6. Sobre Mim
+   7. Formação & Timeline
+   8. Portfólio
+   9. Contato & Formulário
+   10. Footer
+   11. Animações & Utilitários
+   12. Responsivo
+═══════════════════════════════════════════════════ */
+
+/* ─── 1. VARIÁVEIS CSS ──────────────────────────── */
+:root {
+  --bg:         #0d0d12;
+  --bg2:        #13131c;
+  --bg3:        #1a1a28;
+  --border:     rgba(124, 58, 237, 0.18);
+  --purple:     #7c3aed;
+  --purple-lt:  #a78bfa;
+  --purple-dim: #4c1d95;
+  --text:       #e2e2f0;
+  --text-muted: #8885a8;
+  --card-bg:    rgba(22, 22, 32, 0.5);
+  --nav-bg:     rgba(13, 13, 18, 0.85);
+  --shadow:     0 4px 32px rgba(124, 58, 237, 0.12);
+  --tag-bg:     rgba(124, 58, 237, 0.15);
+  --tag-text:   #c4b5fd;
+  --input-bg:   #1e1e2e;
+  --btn-hover:  #6d28d9;
+  --dot:        #7c3aed;
+}
+
+
+[data-theme="light"] {
+  --bg:         #f4f3ff;
+  --bg2:        #edeaf8;
+  --bg3:        #e4e0f5;
+  --border:     rgba(124, 58, 237, 0.22);
+  --text:       #1a1630;
+  --text-muted: #5b5280;
+  --card-bg:    rgba(255, 255, 255, 0.75);
+  --nav-bg:     rgba(244, 243, 255, 0.88);
+  --shadow:     0 4px 32px rgba(124, 58, 237, 0.10);
+  --tag-bg:     rgba(124, 58, 237, 0.10);
+  --tag-text:   #5b21b6;
+  --input-bg:   #ffffff;
+  --dot:        #7c3aed;
+}
+
+/* ─── 2. RESET & BASE ───────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.35s, color 0.35s;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--purple);
+  color: #fff;
+}
+
+/* Textura de ruído sutil no fundo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.45;
+}
+
+/* ─── 3. NAV ────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  transition: background 0.35s, border-color 0.35s;
+}
+
+.nav-brand {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--purple-lt);
+  letter-spacing: -1px;
+}
+
+.nav-brand span {
+  color: var(--purple);
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--purple-lt);
+  background: var(--tag-bg);
+}
+
+.theme-btn {
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  color: var(--purple-lt);
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  margin-left: 0.5rem;
+}
+
+.theme-btn:hover {
+  background: var(--purple-dim);
+  transform: rotate(20deg);
+}
+
+/* ─── 4. HERO ───────────────────────────────────── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 2rem 4rem;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  pointer-events: none;
+}
+
+/* Pixel art avatar */
+.hero-pixel {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 2rem;
+  image-rendering: pixelated;
+  position: relative;
+}
+
+.pixel-avatar {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  grid-template-columns: repeat(10, 10px);
+}
+
+.pixel-avatar div {
+  width: 10px;
+  height: 10px;
+}
+
+.px-p { background: var(--purple); }
+.px-l { background: var(--purple-lt); }
+.px-d { background: var(--purple-dim); }
+.px-0 { background: transparent; }
+
+.hero-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--purple-lt);
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.9rem;
+  border-radius: 99px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 1rem;
+}
+
+h1 .accent {
+  color: var(--purple-lt);
+}
+
+.hero-sub {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Botões */
+.btn-primary {
+  background: var(--purple);
+  color: #fff;
+  padding: 0.7rem 1.6rem;
+  border-radius: 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4);
+}
+
+.btn-primary:hover {
+  background: var(--btn-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--purple-lt);
+  padding: 0.7rem 1.6rem;
+  border-radius: 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-outline:hover {
+  background: var(--tag-bg);
+  transform: translateY(-2px);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ─── 5. SEÇÕES (layout compartilhado) ──────────── */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--purple-lt);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  margin-bottom: 2.5rem;
+  line-height: 1.15;
+}
+
+h2 .accent {
+  color: var(--purple-lt);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--purple) 0%, transparent 100%);
+  margin-bottom: 3rem;
+  opacity: 0.3;
+}
+
+/* Tags reutilizáveis */
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.tag {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+}
+
+/* ─── 6. SOBRE MIM ──────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.about-text p strong {
+  color: var(--text);
+}
+
+.hobbies-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-family: 'Space Mono', monospace;
+}
+
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.hobby-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color 0.2s, background 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+.hobby-card:hover {
+  border-color: var(--purple);
+  background: var(--tag-bg);
+}
+
+.hobby-icon {
+  font-size: 1.3rem;
+}
+
+/* ─── 7. FORMAÇÃO & TIMELINE ────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 4px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--purple), transparent);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 2.2rem;
+}
+
+.tl-dot {
+  position: absolute;
+  left: -2rem;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dot);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+}
+
+.tl-year {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--purple-lt);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.tl-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s;
+}
+
+.tl-card:hover {
+  border-color: var(--purple);
+}
+
+.tl-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.tl-org {
+  color: var(--purple-lt);
+  font-size: 0.82rem;
+  margin-bottom: 0.5rem;
+}
+
+.tl-card p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Skills grid */
+.skills-section {
+  margin-top: 3rem;
+}
+
+.skills-sublabel {
+  margin-bottom: 1.2rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.skill-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.skill-card:hover {
+  border-color: var(--purple);
+  transform: translateY(-3px);
+}
+
+.skill-card h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+
+.skills-note {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ─── 8. PORTFÓLIO ──────────────────────────────── */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.proj-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.proj-card:hover {
+  border-color: var(--purple);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.proj-card--wip {
+  border-style: dashed;
+  opacity: 0.6;
+}
+
+.proj-thumb {
+  height: 140px;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.proj-thumb--sm {
+  font-size: 2rem;
+}
+
+.proj-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+}
+
+.proj-body {
+  padding: 1.2rem;
+}
+
+.proj-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.proj-body p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+}
+
+.proj-body code {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--purple-lt);
+}
+
+.proj-links {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+
+.proj-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--purple-lt);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.7rem;
+  border-radius: 7px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.proj-link:hover {
+  background: var(--tag-bg);
+  border-color: var(--purple);
+}
+
+/* ─── 9. CONTATO & FORMULÁRIO ───────────────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.contact-info p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-link:hover {
+  color: var(--purple-lt);
+}
+
+.contact-link .icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+input,
+textarea {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
+}
+
+input.error,
+textarea.error {
+  border-color: #f87171;
+}
+
+.field-error {
+  color: #f87171;
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+  display: none;
+}
+
+.field-error.visible {
+  display: block;
+}
+
+.form-success {
+  display: none;
+  background: rgba(124, 58, 237, 0.12);
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  color: var(--purple-lt);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-success.visible {
+  display: block;
+}
+
+/* ─── 10. FOOTER ────────────────────────────────── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-family: 'Space Mono', monospace;
+}
+
+footer span {
+  color: var(--purple-lt);
+}
+
+/* ─── 11. ANIMAÇÕES & UTILITÁRIOS ───────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── 12. RESPONSIVO ────────────────────────────── */
+@media (max-width: 700px) {
+  .about-grid,
+  .portfolio-grid,
+  .contact-grid,
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links a {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .hobbies-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 0;
+  }
+
+  .nav-links a:not(.active) {
+    display: none;
+  }
+}
